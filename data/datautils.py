@@ -107,6 +107,7 @@ class JsonImageDataset(Dataset):
 def build_dataset(set_id, transform, data_root, mode='test', n_shot=None, split="all", 
     bongard_anno=False):
     if set_id == 'I':
+        print(data_root)
         testdir = os.path.join(os.path.join(data_root, ID_to_DIRNAME[set_id]), 'val')
         testset = ImageFolder_path(testdir, transform=transform)
 

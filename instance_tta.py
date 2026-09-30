@@ -112,6 +112,7 @@ def main():
             data_transform = AugMixAugmenter(base_transform, preprocess, n_views=args.batch_size-1, 
                                             augmix=len(dset)>1)
             batchsize = 1
+            print(args.dataset_mode)
             val_dataset = build_dataset(dset, data_transform, args.data, mode=args.dataset_mode)
 
             print_log = "number of test samples: {}".format(len(val_dataset))
@@ -265,7 +266,7 @@ def main():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Test-time Prompt Tuning')
-    parser.add_argument('--data', type=str, default='/data1/shared/', help='path to dataset root')
+    parser.add_argument('--data', type=str, default='/datasets/', help='path to dataset root')
     parser.add_argument('--test_sets', type=str, default='A/R/V/K/I', help='test dataset (multiple datasets split by slash)')
     parser.add_argument('--dataset_mode', type=str, default='test', help='which split to use: train/val/test')
     parser.add_argument('-a', '--arch', metavar='ARCH', default='RN50')
