@@ -121,6 +121,7 @@ def build_dataset(set_id, transform, data_root, mode='test', n_shot=None, split=
 
     elif set_id in ['K', 'R']:
         testdir = os.path.join(data_root, ID_to_DIRNAME[set_id])
+        print(testdir)
         # testset = datasets.ImageFolder(testdir, transform=transform)
         testset = ImageFolder_path(testdir, transform=transform)
 

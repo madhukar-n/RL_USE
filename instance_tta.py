@@ -296,5 +296,5 @@ if __name__ == '__main__':
     parser.add_argument('--alpha', default=None, type=float, help='manual alpha value for method (if not provided, will be calculated automatically)')
     parser.add_argument('--skip', action='store_true', help='enable the skip strategy')
     parser.add_argument('--infer', action='store_true', help='only provide the training-free results')
-    parser.add_argument("--out" , default = "output.txt", help = "path to output file")
+    parser.add_argument("--out" , default= "output.txt", help= "path to output file")
     main()

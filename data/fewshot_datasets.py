@@ -139,7 +139,7 @@ path_dict_ori = {
     "caltech101": ["101_ObjectCategories", "./datasets/few-short-datasets/caltech101/split_zhou_Caltech101.json"],
     "ucf101": ["UCF-101-midframes", "./datasets/few-short-datasets/UCF101/split_zhou_UCF101.json"],
     "cars": ["", "./datasets/few-short-datasets/cars/split_zhou_StanfordCars.json"],
-    "eurosat": ["2750", "./datasets/few-short-datasets/eurosat/split_zhou_EuroSAT.json"]
+    "eurosat": ["2750", "/content/drive/MyDrive/RL_USE/datasets/few-short-datasets/eurosat/split_zhou_EuroSAT.json"]
 }
 
 def build_fewshot_dataset(set_id, root, transform, mode='train', n_shot=None):
