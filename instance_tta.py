@@ -96,7 +96,8 @@ def main():
     if not os.path.exists(args.output_dir):
         os.mkdir(args.output_dir)
 
-    args.out_file = open(os.path.join(args.output_dir, 'log_' + dset + '.txt'), 'w')
+    os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
+    args.out_file = open(args.out, 'w')
     args.out_file.write(print_args(args)+'\n')
     args.out_file.flush()
 
@@ -248,6 +249,7 @@ def main():
 
             if (i + 1) % args.print_freq == 0:
                 print_log = 'iter:{}/{}, tta_acc1={:.3f}'.format(i + 1, len(val_loader), zs1.avg)
+
                 args.out_file.write(print_log + '\n')
                 args.out_file.flush()
                 print(print_log + '\n')
@@ -294,5 +296,5 @@ if __name__ == '__main__':
     parser.add_argument('--alpha', default=None, type=float, help='manual alpha value for method (if not provided, will be calculated automatically)')
     parser.add_argument('--skip', action='store_true', help='enable the skip strategy')
     parser.add_argument('--infer', action='store_true', help='only provide the training-free results')
-
+    parser.add_argument("--out" , default = "output.txt", help = "path to output file")
     main()
