@@ -3,14 +3,19 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
+[[source]]
+url = "https://download.pytorch.org/whl/cu126"
+verify_ssl = true
+name = "pytorch-cu126"
+
 [packages]
 ftfy = "==6.3.1"
 numpy = "==2.5.2"
 pillow = "==12.3.0"
 regex = "==2026.7.19"
 scipy = "==1.18.1"
-torch = "==2.13.0"
-torchvision = "==0.28.0"
+torch = {version = "==2.13.0+cu126", index = "pytorch-cu126"}
+torchvision = {version = "==0.28.0+cu126", index = "pytorch-cu126"}
 tqdm = "==4.70.0"
 
 [dev-packages]

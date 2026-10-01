@@ -131,15 +131,15 @@ fewshot_datasets = ['DTD', 'Flower102', 'Food101', 'Cars', 'SUN397',
                     'Aircraft', 'Pets', 'Caltech101', 'UCF101', 'eurosat']
 
 path_dict_ori = {
-    "flower102": ["jpg", "/data1/shared/sorted_split_zhou_OxfordFlowers.json"],
-    "food101": ["images", "/data1/shared/sorted_split_zhou_Food101.json"],
-    "dtd": ["images", "/data1/shared/sorted_split_zhou_DescribableTextures.json"],
+    "flower102": ["jpg", "./datasets/few-short-datasets/flower102/split_zhou_OxfordFlowers.json"],
+    "food101": ["images", "/datasets/few-short-datasets/Food101/split_zhou_Food101.json"],
+    "dtd": ["images", "./datasets/few-shot-datasets/dtd/split_zhou_DescribableTextures.json"],
     "pets": ["images", "/data1/shared/sorted_split_zhou_OxfordPets.json"],
     "sun397": ["SUN397", "/data1/shared/sorted_split_zhou_SUN397.json"],
-    "caltech101": ["101_ObjectCategories", "/data1/shared/sorted_split_zhou_Caltech101.json"],
-    "ucf101": ["UCF-101-midframes", "/data1/shared/sorted_split_zhou_UCF101.json"],
-    "cars": ["", "/data1/shared/sorted_split_zhou_StanfordCars.json"],
-    "eurosat": ["2750", "/data1/shared/sorted_split_zhou_EuroSAT.json"]
+    "caltech101": ["101_ObjectCategories", "./datasets/few-short-datasets/caltech101/split_zhou_Caltech101.json"],
+    "ucf101": ["UCF-101-midframes", "./datasets/few-short-datasets/UCF101/split_zhou_UCF101.json"],
+    "cars": ["", "./datasets/few-short-datasets/cars/split_zhou_StanfordCars.json"],
+    "eurosat": ["2750", "./datasets/few-short-datasets/eurosat/split_zhou_EuroSAT.json"]
 }
 
 def build_fewshot_dataset(set_id, root, transform, mode='train', n_shot=None):
