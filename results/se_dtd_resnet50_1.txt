@@ -1,0 +1,37 @@
+==========================================
+data:./datasets/
+test_sets:DTD
+dataset_mode:test
+arch:RN50
+resolution:224
+workers:4
+batch_size:64
+print_freq:200
+gpu:0
+n_ctx:4
+ctx_init:a_photo_of_a
+load:None
+seed:0
+output_dir:temp/RN50/seed_0/se
+lr:0.005
+selection_p:0.1
+tta_steps:1
+algorithm:se
+load_tecoa:False
+reset:False
+scale:0.4
+beta:-1
+alpha:None
+skip:False
+infer:False
+out:./results/se_dtd_resnet50_1.txt
+out_file:<_io.TextIOWrapper name='./results/se_dtd_resnet50_1.txt' mode='w' encoding='UTF-8'>
+
+number of test samples: 1692
+iter:200/1692, tta_acc1=32.000
+iter:400/1692, tta_acc1=44.250
+iter:600/1692, tta_acc1=37.833
+iter:800/1692, tta_acc1=34.750
+iter:1000/1692, tta_acc1=36.900
+iter:1200/1692, tta_acc1=39.250
+iter:1400/1692, tta_acc1=39.286
