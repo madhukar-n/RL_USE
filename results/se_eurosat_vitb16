@@ -1,0 +1,49 @@
+==========================================
+data:./datasets/
+test_sets:eurosat
+dataset_mode:test
+arch:ViT-B/16
+resolution:224
+workers:4
+batch_size:64
+print_freq:200
+gpu:0
+n_ctx:4
+ctx_init:a_photo_of_a
+load:None
+seed:0
+output_dir:temp/ViT-B16/seed_0/se
+lr:0.005
+selection_p:0.1
+tta_steps:1
+algorithm:se
+load_tecoa:False
+reset:False
+scale:0.4
+beta:-1
+alpha:None
+skip:False
+infer:False
+out:./results/se_eurosat_vitb16
+out_file:<_io.TextIOWrapper name='./results/se_eurosat_vitb16' mode='w' encoding='UTF-8'>
+
+number of test samples: 8100
+iter:200/8100, tta_acc1=0.000
+iter:400/8100, tta_acc1=0.000
+iter:600/8100, tta_acc1=0.000
+iter:800/8100, tta_acc1=0.125
+iter:1000/8100, tta_acc1=0.200
+iter:1200/8100, tta_acc1=0.167
+iter:1400/8100, tta_acc1=0.143
+iter:1600/8100, tta_acc1=0.125
+iter:1800/8100, tta_acc1=0.111
+iter:2000/8100, tta_acc1=0.100
+iter:2200/8100, tta_acc1=0.091
+iter:2400/8100, tta_acc1=0.125
+iter:2600/8100, tta_acc1=0.115
+iter:2800/8100, tta_acc1=3.464
+iter:3000/8100, tta_acc1=9.667
+iter:3200/8100, tta_acc1=14.812
+iter:3400/8100, tta_acc1=19.353
+iter:3600/8100, tta_acc1=19.583
+iter:3800/8100, tta_acc1=18.553

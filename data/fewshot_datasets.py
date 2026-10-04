@@ -136,7 +136,7 @@ path_dict_ori = {
     "dtd": ["images", "./datasets/few-shot-datasets/dtd/split_zhou_DescribableTextures.json"],
     "pets": ["images", "/data1/shared/sorted_split_zhou_OxfordPets.json"],
     "sun397": ["SUN397", "/data1/shared/sorted_split_zhou_SUN397.json"],
-    "caltech101": ["101_ObjectCategories", "./datasets/few-shot-datasets/caltech101/split_zhou_Caltech101.json"],
+    "caltech101": ["101_ObjectCategories", "./datasets/few-shot-datasets/caltech-101/split_zhou_Caltech101.json"],
     "ucf101": ["UCF-101-midframes", "./datasets/few-shot-datasets/UCF101/split_zhou_UCF101.json"],
     "cars": ["", "./datasets/few-shot-datasets/cars/split_zhou_StanfordCars.json"],
     "eurosat": ["2750", "./datasets/few-shot-datasets/eurosat/split_zhou_EuroSAT.json"]

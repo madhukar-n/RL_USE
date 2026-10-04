@@ -35,3 +35,6 @@ iter:800/1692, tta_acc1=34.750
 iter:1000/1692, tta_acc1=36.900
 iter:1200/1692, tta_acc1=39.250
 iter:1400/1692, tta_acc1=39.286
+iter:1600/1692, tta_acc1=40.750
+iter:1692/1692, tta_acc1=40.662
+=> Acc@1 on [DTD]: TTA 40.662
