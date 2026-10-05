@@ -132,7 +132,7 @@ fewshot_datasets = ['DTD', 'Flower102', 'Food101', 'Cars', 'SUN397',
 
 path_dict_ori = {
     "flower102": ["jpg", "./datasets/few-shot-datasets/flower102/split_zhou_OxfordFlowers.json"],
-    "food101": ["images", "./datasets/few-shot-datasets/Food101/split_zhou_Food101.json"],
+    "food101": ["images", "./datasets/few-shot-datasets/food-101/split_zhou_Food101.json"],
     "dtd": ["images", "./datasets/few-shot-datasets/dtd/split_zhou_DescribableTextures.json"],
     "pets": ["images", "/data1/shared/sorted_split_zhou_OxfordPets.json"],
     "sun397": ["SUN397", "/data1/shared/sorted_split_zhou_SUN397.json"],

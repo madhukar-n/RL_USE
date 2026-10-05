@@ -1,0 +1,30 @@
+==========================================
+data:./datasets/
+test_sets:Food101
+dataset_mode:test
+arch:RN50
+resolution:224
+workers:4
+batch_size:64
+print_freq:200
+gpu:0
+n_ctx:4
+ctx_init:a_photo_of_a
+load:None
+seed:0
+output_dir:temp/RN50/seed_0/se
+lr:0.005
+selection_p:0.1
+tta_steps:1
+algorithm:se
+load_tecoa:False
+reset:False
+scale:0.4
+beta:-1
+alpha:None
+skip:False
+infer:False
+out:./results/se_food__resnet50
+out_file:<_io.TextIOWrapper name='./results/se_food__resnet50' mode='w' encoding='UTF-8'>
+
+number of test samples: 30300
