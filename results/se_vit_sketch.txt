@@ -1,0 +1,286 @@
+==========================================
+data:./datasets/
+test_sets:K
+dataset_mode:test
+arch:ViT-B/16
+resolution:224
+workers:4
+batch_size:64
+print_freq:200
+gpu:0
+n_ctx:4
+ctx_init:a_photo_of_a
+load:None
+seed:0
+output_dir:temp/ViT-B16/seed_0/se
+lr:0.005
+selection_p:0.1
+tta_steps:1
+algorithm:se
+load_tecoa:False
+reset:False
+scale:0.4
+beta:-1
+alpha:None
+skip:False
+infer:False
+out:se_vit_sketch.txt
+out_file:<_io.TextIOWrapper name='se_vit_sketch.txt' mode='w' encoding='utf-8'>
+
+number of test samples: 50889
+iter:200/50889, tta_acc1=47.500
+iter:400/50889, tta_acc1=53.250
+iter:600/50889, tta_acc1=54.167
+iter:800/50889, tta_acc1=48.125
+iter:1000/50889, tta_acc1=49.200
+iter:1200/50889, tta_acc1=50.917
+iter:1400/50889, tta_acc1=49.357
+iter:1600/50889, tta_acc1=49.812
+iter:1800/50889, tta_acc1=47.667
+iter:2000/50889, tta_acc1=46.550
+iter:2200/50889, tta_acc1=43.682
+iter:2400/50889, tta_acc1=42.625
+iter:2600/50889, tta_acc1=42.654
+iter:2800/50889, tta_acc1=42.107
+iter:3000/50889, tta_acc1=39.767
+iter:3200/50889, tta_acc1=38.438
+iter:3400/50889, tta_acc1=37.294
+iter:3600/50889, tta_acc1=37.139
+iter:3800/50889, tta_acc1=37.421
+iter:4000/50889, tta_acc1=37.000
+iter:4200/50889, tta_acc1=37.738
+iter:4400/50889, tta_acc1=37.227
+iter:4600/50889, tta_acc1=37.891
+iter:4800/50889, tta_acc1=37.542
+iter:5000/50889, tta_acc1=37.940
+iter:5200/50889, tta_acc1=38.173
+iter:5400/50889, tta_acc1=39.481
+iter:5600/50889, tta_acc1=40.143
+iter:5800/50889, tta_acc1=41.276
+iter:6000/50889, tta_acc1=41.433
+iter:6200/50889, tta_acc1=41.613
+iter:6400/50889, tta_acc1=41.469
+iter:6600/50889, tta_acc1=41.227
+iter:6800/50889, tta_acc1=41.015
+iter:7000/50889, tta_acc1=41.043
+iter:7200/50889, tta_acc1=40.792
+iter:7400/50889, tta_acc1=41.176
+iter:7600/50889, tta_acc1=42.000
+iter:7800/50889, tta_acc1=42.667
+iter:8000/50889, tta_acc1=42.612
+iter:8200/50889, tta_acc1=42.793
+iter:8400/50889, tta_acc1=42.512
+iter:8600/50889, tta_acc1=41.605
+iter:8800/50889, tta_acc1=42.023
+iter:9000/50889, tta_acc1=41.889
+iter:9200/50889, tta_acc1=42.098
+iter:9400/50889, tta_acc1=41.851
+iter:9600/50889, tta_acc1=41.281
+iter:9800/50889, tta_acc1=41.082
+iter:10000/50889, tta_acc1=41.100
+iter:10200/50889, tta_acc1=40.980
+iter:10400/50889, tta_acc1=40.683
+iter:10600/50889, tta_acc1=40.547
+iter:10800/50889, tta_acc1=40.481
+iter:11000/50889, tta_acc1=40.273
+iter:11200/50889, tta_acc1=40.125
+iter:11400/50889, tta_acc1=39.851
+iter:11600/50889, tta_acc1=39.914
+iter:11800/50889, tta_acc1=39.720
+iter:12000/50889, tta_acc1=39.558
+iter:12200/50889, tta_acc1=39.148
+iter:12400/50889, tta_acc1=39.008
+iter:12600/50889, tta_acc1=39.103
+iter:12800/50889, tta_acc1=38.969
+iter:13000/50889, tta_acc1=39.115
+iter:13200/50889, tta_acc1=39.098
+iter:13400/50889, tta_acc1=39.440
+iter:13600/50889, tta_acc1=39.235
+iter:13800/50889, tta_acc1=39.304
+iter:14000/50889, tta_acc1=38.971
+iter:14200/50889, tta_acc1=39.007
+iter:14400/50889, tta_acc1=39.160
+iter:14600/50889, tta_acc1=39.623
+iter:14800/50889, tta_acc1=39.858
+iter:15000/50889, tta_acc1=40.347
+iter:15200/50889, tta_acc1=40.447
+iter:15400/50889, tta_acc1=40.468
+iter:15600/50889, tta_acc1=40.417
+iter:15800/50889, tta_acc1=40.557
+iter:16000/50889, tta_acc1=40.594
+iter:16200/50889, tta_acc1=40.599
+iter:16400/50889, tta_acc1=40.530
+iter:16600/50889, tta_acc1=40.319
+iter:16800/50889, tta_acc1=40.399
+iter:17000/50889, tta_acc1=40.518
+iter:17200/50889, tta_acc1=40.855
+iter:17400/50889, tta_acc1=41.310
+iter:17600/50889, tta_acc1=41.614
+iter:17800/50889, tta_acc1=41.719
+iter:18000/50889, tta_acc1=41.867
+iter:18200/50889, tta_acc1=42.137
+iter:18400/50889, tta_acc1=42.212
+iter:18600/50889, tta_acc1=42.570
+iter:18800/50889, tta_acc1=42.676
+iter:19000/50889, tta_acc1=42.489
+iter:19200/50889, tta_acc1=42.203
+iter:19400/50889, tta_acc1=41.918
+iter:19600/50889, tta_acc1=41.857
+iter:19800/50889, tta_acc1=42.116
+iter:20000/50889, tta_acc1=42.085
+iter:20200/50889, tta_acc1=42.178
+iter:20400/50889, tta_acc1=42.534
+iter:20600/50889, tta_acc1=42.976
+iter:20800/50889, tta_acc1=43.053
+iter:21000/50889, tta_acc1=43.219
+iter:21200/50889, tta_acc1=43.392
+iter:21400/50889, tta_acc1=43.505
+iter:21600/50889, tta_acc1=43.792
+iter:21800/50889, tta_acc1=43.936
+iter:22000/50889, tta_acc1=44.091
+iter:22200/50889, tta_acc1=44.059
+iter:22400/50889, tta_acc1=44.205
+iter:22600/50889, tta_acc1=44.199
+iter:22800/50889, tta_acc1=44.311
+iter:23000/50889, tta_acc1=44.483
+iter:23200/50889, tta_acc1=44.491
+iter:23400/50889, tta_acc1=44.645
+iter:23600/50889, tta_acc1=44.657
+iter:23800/50889, tta_acc1=44.777
+iter:24000/50889, tta_acc1=44.958
+iter:24200/50889, tta_acc1=44.934
+iter:24400/50889, tta_acc1=45.029
+iter:24600/50889, tta_acc1=45.171
+iter:24800/50889, tta_acc1=45.190
+iter:25000/50889, tta_acc1=45.300
+iter:25200/50889, tta_acc1=45.317
+iter:25400/50889, tta_acc1=45.402
+iter:25600/50889, tta_acc1=45.531
+iter:25800/50889, tta_acc1=45.527
+iter:26000/50889, tta_acc1=45.473
+iter:26200/50889, tta_acc1=45.626
+iter:26400/50889, tta_acc1=45.788
+iter:26600/50889, tta_acc1=45.835
+iter:26800/50889, tta_acc1=45.903
+iter:27000/50889, tta_acc1=46.052
+iter:27200/50889, tta_acc1=46.154
+iter:27400/50889, tta_acc1=46.263
+iter:27600/50889, tta_acc1=46.246
+iter:27800/50889, tta_acc1=46.212
+iter:28000/50889, tta_acc1=46.300
+iter:28200/50889, tta_acc1=46.245
+iter:28400/50889, tta_acc1=46.246
+iter:28600/50889, tta_acc1=46.497
+iter:28800/50889, tta_acc1=46.493
+iter:29000/50889, tta_acc1=46.469
+iter:29200/50889, tta_acc1=46.664
+iter:29400/50889, tta_acc1=46.714
+iter:29600/50889, tta_acc1=46.689
+iter:29800/50889, tta_acc1=46.819
+iter:30000/50889, tta_acc1=46.790
+iter:30200/50889, tta_acc1=46.722
+iter:30400/50889, tta_acc1=46.786
+iter:30600/50889, tta_acc1=46.758
+iter:30800/50889, tta_acc1=46.808
+iter:31000/50889, tta_acc1=46.952
+iter:31200/50889, tta_acc1=47.071
+iter:31400/50889, tta_acc1=47.258
+iter:31600/50889, tta_acc1=47.421
+iter:31800/50889, tta_acc1=47.459
+iter:32000/50889, tta_acc1=47.491
+iter:32200/50889, tta_acc1=47.565
+iter:32400/50889, tta_acc1=47.657
+iter:32600/50889, tta_acc1=47.586
+iter:32800/50889, tta_acc1=47.628
+iter:33000/50889, tta_acc1=47.694
+iter:33200/50889, tta_acc1=47.883
+iter:33400/50889, tta_acc1=47.850
+iter:33600/50889, tta_acc1=47.857
+iter:33800/50889, tta_acc1=47.893
+iter:34000/50889, tta_acc1=47.850
+iter:34200/50889, tta_acc1=47.921
+iter:34400/50889, tta_acc1=47.866
+iter:34600/50889, tta_acc1=47.864
+iter:34800/50889, tta_acc1=47.856
+iter:35000/50889, tta_acc1=47.871
+iter:35200/50889, tta_acc1=47.849
+iter:35400/50889, tta_acc1=47.729
+iter:35600/50889, tta_acc1=47.674
+iter:35800/50889, tta_acc1=47.631
+iter:36000/50889, tta_acc1=47.550
+iter:36200/50889, tta_acc1=47.506
+iter:36400/50889, tta_acc1=47.522
+iter:36600/50889, tta_acc1=47.552
+iter:36800/50889, tta_acc1=47.679
+iter:37000/50889, tta_acc1=47.589
+iter:37200/50889, tta_acc1=47.543
+iter:37400/50889, tta_acc1=47.505
+iter:37600/50889, tta_acc1=47.370
+iter:37800/50889, tta_acc1=47.365
+iter:38000/50889, tta_acc1=47.258
+iter:38200/50889, tta_acc1=47.306
+iter:38400/50889, tta_acc1=47.339
+iter:38600/50889, tta_acc1=47.378
+iter:38800/50889, tta_acc1=47.485
+iter:39000/50889, tta_acc1=47.538
+iter:39200/50889, tta_acc1=47.676
+iter:39400/50889, tta_acc1=47.761
+iter:39600/50889, tta_acc1=47.881
+iter:39800/50889, tta_acc1=47.889
+iter:40000/50889, tta_acc1=47.803
+iter:40200/50889, tta_acc1=47.888
+iter:40400/50889, tta_acc1=47.923
+iter:40600/50889, tta_acc1=48.015
+iter:40800/50889, tta_acc1=48.002
+iter:41000/50889, tta_acc1=48.073
+iter:41200/50889, tta_acc1=48.138
+iter:41400/50889, tta_acc1=48.208
+iter:41600/50889, tta_acc1=48.252
+iter:41800/50889, tta_acc1=48.246
+iter:42000/50889, tta_acc1=48.271
+iter:42200/50889, tta_acc1=48.320
+iter:42400/50889, tta_acc1=48.420
+iter:42600/50889, tta_acc1=48.472
+iter:42800/50889, tta_acc1=48.404
+iter:43000/50889, tta_acc1=48.549
+iter:43200/50889, tta_acc1=48.632
+iter:43400/50889, tta_acc1=48.740
+iter:43600/50889, tta_acc1=48.798
+iter:43800/50889, tta_acc1=48.822
+iter:44000/50889, tta_acc1=48.884
+iter:44200/50889, tta_acc1=48.964
+iter:44400/50889, tta_acc1=49.065
+iter:44600/50889, tta_acc1=49.191
+iter:44800/50889, tta_acc1=49.201
+iter:45000/50889, tta_acc1=49.233
+iter:45200/50889, tta_acc1=49.153
+iter:45400/50889, tta_acc1=49.273
+iter:45600/50889, tta_acc1=49.333
+iter:45800/50889, tta_acc1=49.297
+iter:46000/50889, tta_acc1=49.289
+iter:46200/50889, tta_acc1=49.242
+iter:46400/50889, tta_acc1=49.099
+iter:46600/50889, tta_acc1=49.024
+iter:46800/50889, tta_acc1=49.182
+iter:47000/50889, tta_acc1=49.230
+iter:47200/50889, tta_acc1=49.068
+iter:47400/50889, tta_acc1=49.042
+iter:47600/50889, tta_acc1=49.080
+iter:47800/50889, tta_acc1=49.069
+iter:48000/50889, tta_acc1=48.979
+iter:48200/50889, tta_acc1=49.012
+iter:48400/50889, tta_acc1=49.035
+iter:48600/50889, tta_acc1=49.144
+iter:48800/50889, tta_acc1=49.092
+iter:49000/50889, tta_acc1=48.947
+iter:49200/50889, tta_acc1=48.935
+iter:49400/50889, tta_acc1=48.903
+iter:49600/50889, tta_acc1=48.869
+iter:49800/50889, tta_acc1=48.771
+iter:50000/50889, tta_acc1=48.796
+iter:50200/50889, tta_acc1=48.853
+iter:50400/50889, tta_acc1=48.841
+iter:50600/50889, tta_acc1=48.753
+iter:50800/50889, tta_acc1=48.671
+iter:50889/50889, tta_acc1=48.677
+=> Acc@1 on [K]: TTA 48.677

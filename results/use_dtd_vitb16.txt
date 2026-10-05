@@ -1,0 +1,40 @@
+==========================================
+data:./datasets/
+test_sets:DTD
+dataset_mode:test
+arch:ViT-B/16
+resolution:224
+workers:4
+batch_size:64
+print_freq:200
+gpu:0
+n_ctx:4
+ctx_init:a_photo_of_a
+load:None
+seed:0
+output_dir:temp/ViT-B16/seed_0/use
+lr:0.005
+selection_p:0.1
+tta_steps:1
+algorithm:use
+load_tecoa:False
+reset:False
+scale:0.4
+beta:-1
+alpha:None
+skip:False
+infer:False
+out:./results/use_dtd_vitb16
+out_file:<_io.TextIOWrapper name='./results/use_dtd_vitb16' mode='w' encoding='utf-8'>
+
+number of test samples: 1692
+iter:200/1692, tta_acc1=36.500
+iter:400/1692, tta_acc1=50.000
+iter:600/1692, tta_acc1=43.333
+iter:800/1692, tta_acc1=41.750
+iter:1000/1692, tta_acc1=44.000
+iter:1200/1692, tta_acc1=46.083
+iter:1400/1692, tta_acc1=45.071
+iter:1600/1692, tta_acc1=47.500
+iter:1692/1692, tta_acc1=47.577
+=> Acc@1 on [DTD]: TTA 47.577

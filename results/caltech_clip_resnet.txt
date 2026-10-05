@@ -1,0 +1,44 @@
+==========================================
+data:./datasets/
+test_sets:Caltech101
+dataset_mode:test
+arch:RN50
+resolution:224
+workers:4
+batch_size:64
+print_freq:200
+gpu:0
+n_ctx:4
+ctx_init:a_photo_of_a
+load:None
+seed:0
+output_dir:temp/RN50/seed_0/clip
+lr:0.005
+selection_p:0.1
+tta_steps:1
+algorithm:clip
+load_tecoa:False
+reset:False
+scale:0.4
+beta:-1
+alpha:None
+skip:False
+infer:False
+out:./results/caltech_clip_resnet.txt
+out_file:<_io.TextIOWrapper name='./results/caltech_clip_resnet.txt' mode='w' encoding='utf-8'>
+
+number of test samples: 2465
+iter:200/2465, tta_acc1=69.000
+iter:400/2465, tta_acc1=84.500
+iter:600/2465, tta_acc1=89.333
+iter:800/2465, tta_acc1=89.375
+iter:1000/2465, tta_acc1=88.800
+iter:1200/2465, tta_acc1=85.417
+iter:1400/2465, tta_acc1=84.357
+iter:1600/2465, tta_acc1=85.125
+iter:1800/2465, tta_acc1=83.500
+iter:2000/2465, tta_acc1=84.250
+iter:2200/2465, tta_acc1=84.727
+iter:2400/2465, tta_acc1=85.750
+iter:2465/2465, tta_acc1=85.761
+=> Acc@1 on [Caltech101]: TTA 85.761

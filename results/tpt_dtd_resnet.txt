@@ -1,0 +1,40 @@
+==========================================
+data:./datasets/
+test_sets:DTD
+dataset_mode:test
+arch:RN50
+resolution:224
+workers:4
+batch_size:64
+print_freq:200
+gpu:0
+n_ctx:4
+ctx_init:a_photo_of_a
+load:None
+seed:0
+output_dir:temp/RN50/seed_0/tpt
+lr:0.005
+selection_p:0.1
+tta_steps:1
+algorithm:tpt
+load_tecoa:False
+reset:False
+scale:0.4
+beta:-1
+alpha:None
+skip:False
+infer:False
+out:./results/tpt_dtd_resnet
+out_file:<_io.TextIOWrapper name='./results/tpt_dtd_resnet' mode='w' encoding='utf-8'>
+
+number of test samples: 1692
+iter:200/1692, tta_acc1=33.500
+iter:400/1692, tta_acc1=47.500
+iter:600/1692, tta_acc1=41.000
+iter:800/1692, tta_acc1=37.750
+iter:1000/1692, tta_acc1=39.200
+iter:1200/1692, tta_acc1=40.667
+iter:1400/1692, tta_acc1=40.571
+iter:1600/1692, tta_acc1=41.938
+iter:1692/1692, tta_acc1=41.844
+=> Acc@1 on [DTD]: TTA 41.844

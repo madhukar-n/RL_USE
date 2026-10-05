@@ -1,0 +1,44 @@
+==========================================
+data:./datasets/
+test_sets:Caltech101
+dataset_mode:test
+arch:ViT-B/16
+resolution:224
+workers:4
+batch_size:64
+print_freq:200
+gpu:0
+n_ctx:4
+ctx_init:a_photo_of_a
+load:None
+seed:0
+output_dir:temp/ViT-B16/seed_0/tpt
+lr:0.005
+selection_p:0.1
+tta_steps:1
+algorithm:tpt
+load_tecoa:False
+reset:False
+scale:0.4
+beta:-1
+alpha:None
+skip:False
+infer:False
+out:./results/caltech_tpt_vitb16.txt
+out_file:<_io.TextIOWrapper name='./results/caltech_tpt_vitb16.txt' mode='w' encoding='utf-8'>
+
+number of test samples: 2465
+iter:200/2465, tta_acc1=97.500
+iter:400/2465, tta_acc1=98.750
+iter:600/2465, tta_acc1=99.000
+iter:800/2465, tta_acc1=97.750
+iter:1000/2465, tta_acc1=97.400
+iter:1200/2465, tta_acc1=95.750
+iter:1400/2465, tta_acc1=94.786
+iter:1600/2465, tta_acc1=95.250
+iter:1800/2465, tta_acc1=93.333
+iter:2000/2465, tta_acc1=93.900
+iter:2200/2465, tta_acc1=93.955
+iter:2400/2465, tta_acc1=94.458
+iter:2465/2465, tta_acc1=94.320
+=> Acc@1 on [Caltech101]: TTA 94.320

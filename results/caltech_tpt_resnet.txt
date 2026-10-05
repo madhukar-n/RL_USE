@@ -1,0 +1,44 @@
+==========================================
+data:./datasets/
+test_sets:Caltech101
+dataset_mode:test
+arch:RN50
+resolution:224
+workers:4
+batch_size:64
+print_freq:200
+gpu:0
+n_ctx:4
+ctx_init:a_photo_of_a
+load:None
+seed:0
+output_dir:temp/RN50/seed_0/tpt
+lr:0.005
+selection_p:0.1
+tta_steps:1
+algorithm:tpt
+load_tecoa:False
+reset:False
+scale:0.4
+beta:-1
+alpha:None
+skip:False
+infer:False
+out:./results/caltech_tpt_resnet.txt
+out_file:<_io.TextIOWrapper name='./results/caltech_tpt_resnet.txt' mode='w' encoding='utf-8'>
+
+number of test samples: 2465
+iter:200/2465, tta_acc1=81.000
+iter:400/2465, tta_acc1=90.500
+iter:600/2465, tta_acc1=93.167
+iter:800/2465, tta_acc1=92.125
+iter:1000/2465, tta_acc1=91.700
+iter:1200/2465, tta_acc1=88.333
+iter:1400/2465, tta_acc1=86.643
+iter:1600/2465, tta_acc1=87.438
+iter:1800/2465, tta_acc1=84.889
+iter:2000/2465, tta_acc1=85.450
+iter:2200/2465, tta_acc1=86.091
+iter:2400/2465, tta_acc1=87.000
+iter:2465/2465, tta_acc1=87.140
+=> Acc@1 on [Caltech101]: TTA 87.140
