@@ -44,6 +44,7 @@ from instance_method.tpt import TPT
 from instance_method.use import USE
 from instance_method.se import SE
 from instance_method.clip import CLIP
+from instance_method.headroom import Headroom
 from utils.use import select_and_cal_ent
  
 import time
@@ -102,7 +103,7 @@ def main():
     args.out_file.flush()
 
     if True:
-        if args.algorithm in ['use','se', 'tpt', 'clip']:
+        if args.algorithm in ['use','se', 'tpt', 'clip', 'headroom']:
             base_transform = transforms.Compose([
                 transforms.Resize(args.resolution, interpolation=BICUBIC),
                 transforms.CenterCrop(args.resolution)])
@@ -115,6 +116,12 @@ def main():
             batchsize = 1
             print(args.dataset_mode)
             val_dataset = build_dataset(dset, data_transform, args.data, mode=args.dataset_mode)
+            if args.max_samples is not None:
+                if args.max_samples < 0:
+                    parser.error('--max-samples must be non-negative')
+                val_dataset = torch.utils.data.Subset(
+                    val_dataset, range(min(args.max_samples, len(val_dataset)))
+                )
 
             print_log = "number of test samples: {}".format(len(val_dataset))
             args.out_file.write(print_log + '\n')
@@ -150,7 +157,7 @@ def main():
         # ... (前面的代码保持不变)
 # 
         if True:
-            if args.algorithm in ['sts', 'use','se', 'tpt', 'mta', 'ctpt', 'rlcf', 'clipzs', 'zero', 'rtpt','clip']:
+            if args.algorithm in ['sts', 'use','se', 'tpt', 'mta', 'ctpt', 'rlcf', 'clipzs', 'zero', 'rtpt','clip', 'headroom']:
                 model = get_coop(args.arch, classnames, args.gpu, args.n_ctx, args.ctx_init)
             elif args.algorithm in ['tps']:
                 model = get_shift_v2(args.arch, classnames, args.gpu, args.n_ctx, args.ctx_init)
@@ -213,6 +220,8 @@ def main():
             tta_trainer = SE(model, args.gpu)
         elif args.algorithm == 'clip':
             tta_trainer = CLIP(model, args.gpu)
+        elif args.algorithm == 'headroom':
+            tta_trainer = Headroom(model, args.gpu)
         elif args.algorithm == 'sts':
             tta_trainer = STS(model, args.gpu)
         else:  
@@ -231,24 +240,41 @@ def main():
             images = data[0]
             if isinstance(images, list):
                 for k in range(len(images)):
-                    images[k] = images[k].cuda(args.gpu, non_blocking=True)
+                    if torch.cuda.is_available():
+                        images[k] = images[k].cuda(args.gpu, non_blocking=True)
                 image = images[0]
             else:
                 if len(images.size()) > 4:
                     # when using ImageNet Sampler as the dataset
                     assert images.size()[0] == 1
                     images = images.squeeze(0)
-                images = images.cuda(args.gpu, non_blocking=True)
+                if torch.cuda.is_available():
+                    images = images.cuda(args.gpu, non_blocking=True)
                 image = images
 
             images = torch.cat(images, dim=0)
-            pred_tta = tta_trainer.adaptation_process(image, images, args)
+            if args.algorithm == 'headroom':
+                metrics = tta_trainer.evaluate_sample(images, target, args)
+                pred_tta = metrics["pred_q_se_use"]
+            else:
+                pred_tta = tta_trainer.adaptation_process(image, images, args)
 
             acc_tta = float(int(pred_tta) == int(target.item()))
             zs1.update(acc_tta * 100, 1)
 
             if (i + 1) % args.print_freq == 0:
-                print_log = 'iter:{}/{}, tta_acc1={:.3f}'.format(i + 1, len(val_loader), zs1.avg)
+                if args.algorithm == 'headroom':
+                    s = tta_trainer.summary()
+                    print_log = (
+                        'iter:{}/{}, se_q_acc1={:.3f}, oracle_mixed_q_acc1={:.3f}, '
+                        'oracle_pure_q_acc1={:.3f}, zs_view0_acc1={:.3f}, min_ent_view_acc1={:.3f}'
+                    ).format(
+                        i + 1, len(val_loader),
+                        s['acc_q_se_use'], s['acc_q_oracle_se_mixed'],
+                        s['acc_q_oracle_pure_all'], s['acc_zs_view0'], s['acc_min_ent_single_aug']
+                    )
+                else:
+                    print_log = 'iter:{}/{}, tta_acc1={:.3f}'.format(i + 1, len(val_loader), zs1.avg)
 
                 args.out_file.write(print_log + '\n')
                 args.out_file.flush()
@@ -260,6 +286,11 @@ def main():
         print(print_log+'\n')
 
         del val_dataset, val_loader
+        if args.algorithm == 'headroom':
+            report = tta_trainer.format_report(dset)
+            args.out_file.write(report + '\n')
+            args.out_file.flush()
+            print(report + '\n')
         print_log = "=> Acc@1 on [{}]: TTA {:.3f}".format(dset, zs1.avg)
       
         args.out_file.write(print_log + '\n')
@@ -271,6 +302,8 @@ if __name__ == '__main__':
     parser.add_argument('--data', type=str, default='./datasets/', help='path to dataset root')
     parser.add_argument('--test_sets', type=str, default='A/R/V/K/I', help='test dataset (multiple datasets split by slash)')
     parser.add_argument('--dataset_mode', type=str, default='test', help='which split to use: train/val/test')
+    parser.add_argument('--max-samples', type=int, default=None,
+                        help='maximum number of samples to evaluate (default: all)')
     parser.add_argument('-a', '--arch', metavar='ARCH', default='RN50')
     parser.add_argument('--resolution', default=224, type=int, help='CLIP image resolution')
     parser.add_argument('-j', '--workers', default=4, type=int, metavar='N',
@@ -288,7 +321,7 @@ if __name__ == '__main__':
                         metavar='LR', help='initial learning rate', dest='lr')
     parser.add_argument('--selection_p', default=0.1, type=float, help='confidence selection percentile')
     parser.add_argument('--tta_steps', default=1, type=int, help='test-time-adapt steps')
-    parser.add_argument('--algorithm', type=str, default='tpt', choices=['sts', 'use','se', 'tpt', 'mta', 'ctpt', 'rlcf', 'clipzs', 'zero', 'tps', 'ttl', 'rtpt', 'clip'])
+    parser.add_argument('--algorithm', type=str, default='tpt', choices=['sts', 'use','se', 'tpt', 'mta', 'ctpt', 'rlcf', 'clipzs', 'zero', 'tps', 'ttl', 'rtpt', 'clip', 'headroom'])
     parser.add_argument('--load_tecoa', action='store_true')
     parser.add_argument('--reset', action='store_true')
     parser.add_argument('--scale', default=0.4, type=float)
