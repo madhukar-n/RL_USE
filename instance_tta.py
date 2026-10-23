@@ -41,7 +41,7 @@ from instance_method.tpt import TPT
 #from instance_method.ttl import TTL
 #from instance_method.rtpt import RTPT
 #from instance_method.sts import STS
-from instance_method.use import USE
+from instance_method.use_1 import USE
 from instance_method.se_1 import SE
 from instance_method.clip import CLIP
 from instance_method.headroom import Headroom
@@ -232,7 +232,7 @@ def main():
                 metrics = tta_trainer.evaluate_sample(images, target, args)
                 pred_tta = metrics["pred_q_se_use"]
             elif args.algorithm in ['use', 'se']:
-                pred_tta = tta_trainer.adaptation_process(image, images, args)
+                pred_tta, ent,_,_,_,_= tta_trainer.adaptation_process(image, images,target,args)
                 
                 # Track metrics for SE/USE
                 is_correct = (int(pred_tta) == int(target.item()))
@@ -327,4 +327,6 @@ if __name__ == '__main__':
     parser.add_argument('--skip', action='store_true', help='enable the skip strategy')
     parser.add_argument('--infer', action='store_true', help='only provide the training-free results')
     parser.add_argument("--out" , default= "output.txt", help= "path to output file")
+    parser.add_argument('--use_feedback', action='store_true', help='Enable binary feedback via REINFORCE')
+    parser.add_argument('--feedback_ent_threshold', default=0.6, type=float, help='Entropy threshold to trigger oracle')
     main()

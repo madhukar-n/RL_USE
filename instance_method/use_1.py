@@ -14,7 +14,7 @@ class USE():
         self.optimizer = torch.optim.AdamW(self.model.prompt_learner.parameters(), args.lr)
         self.scaler = torch.amp.GradScaler('cuda', init_scale=1000)
 
-    def adaptation_process(self, image, images, args):
+    def adaptation_process(self, image, images,target, args):
         assert args.tta_steps > 0
 
         self.pre_adaptation(args)
@@ -51,8 +51,14 @@ class USE():
 
             if not (pred_augs[idx] != pred_zs).sum().item() == 0:
                 with torch.amp.autocast('cuda'):
-                    loss, pred_ = rce_loss(outputs[0], outputs[1:][idx], alpha)
-
+                    if ask_oracle:
+                        reward = 1.0 if int(pred_mean) == int(true_label.item()) else -1.0
+                        probs = outputs[0].softmax(dim=0)
+                        log_prob = torch.log(probs[pred_mean] + 1e-8)
+                        loss = -reward * log_prob
+                    else:
+                        #When we want existing RCE loss function instead of reinforcement
+                        loss, _ = rce_loss(outputs[0],outputs[1:][idx], alpha)
                 self.optimizer.zero_grad()
                 self.scaler.scale(loss).backward()
                 self.scaler.step(self.optimizer)
