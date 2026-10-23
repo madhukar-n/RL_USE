@@ -1,0 +1,38 @@
+==========================================
+data:./datasets/
+test_sets:Food101
+dataset_mode:test
+arch:ViT-B/16
+resolution:224
+workers:4
+batch_size:64
+print_freq:200
+gpu:0
+n_ctx:4
+ctx_init:a_photo_of_a
+load:None
+seed:0
+output_dir:temp/ViT-B16/seed_0/se
+lr:0.005
+selection_p:0.1
+tta_steps:1
+algorithm:se
+load_tecoa:False
+reset:False
+scale:0.4
+beta:-1
+alpha:None
+skip:False
+infer:False
+out:./results/se_food_vitb16.txt
+out_file:<_io.TextIOWrapper name='./results/se_food_vitb16.txt' mode='w' encoding='UTF-8'>
+
+number of test samples: 30300
+iter:200/30300, tta_acc1=73.500
+iter:400/30300, tta_acc1=77.500
+iter:600/30300, tta_acc1=81.167
+iter:800/30300, tta_acc1=83.625
+iter:1000/30300, tta_acc1=85.300
+iter:1200/30300, tta_acc1=86.667
+iter:1400/30300, tta_acc1=86.571
+iter:1600/30300, tta_acc1=85.750

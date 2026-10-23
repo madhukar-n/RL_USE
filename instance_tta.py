@@ -1,6 +1,7 @@
 import argparse
 import pdb
 import time
+import os
 
 from PIL import Image
 import numpy as np
@@ -29,7 +30,6 @@ from utils.tools import Summary, AverageMeter, ProgressMeter, accuracy, load_mod
 from data.cls_to_names import *
 from data.fewshot_datasets import fewshot_datasets
 from data.imagenet_variants import thousand_k_to_200, imagenet_a_mask, imagenet_r_mask, imagenet_v_mask
-import os
 
 from instance_method.tpt import TPT
 #from instance_method.ctpt import CTPT
@@ -47,8 +47,6 @@ from instance_method.clip import CLIP
 from instance_method.headroom import Headroom
 from utils.use import select_and_cal_ent
  
-import time
-
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
     and callable(models.__dict__[name]))
@@ -153,9 +151,6 @@ def main():
             else:
                 classnames = classnames_all
 
-        # ##########  Model  ##########
-        # ... (前面的代码保持不变)
-# 
         if True:
             if args.algorithm in ['sts', 'use','se', 'tpt', 'mta', 'ctpt', 'rlcf', 'clipzs', 'zero', 'rtpt','clip', 'headroom']:
                 model = get_coop(args.arch, classnames, args.gpu, args.n_ctx, args.ctx_init)
@@ -174,19 +169,9 @@ def main():
                 }[args.arch]
                 load_path = os.path.join(args.load, load_path)
                 pretrained_ctx = torch.load(load_path, weights_only=False, map_location='cpu')['state_dict']['ctx']
-                # print(pretrained_ctx)
                 assert pretrained_ctx.size()[0] == args.n_ctx
                 args.pretrained_ctx = pretrained_ctx
             
-            # if args.load_tecoa:
-            #     print('loading tecoa')
-            #     args.robust_pretrain_path = {
-            #         'RN50': 'your_cache_path/tecoa/rn50_eps1.pth.tar',
-            #         'ViT-B/32': 'your_cache_path/tecoa/vitb32_eps4.pth.tar'
-            #     }[args.arch]
-            #     robust_state_dict = torch.load(args.robust_pretrain_path, map_location='cpu')
-            #     model.image_encoder.load_state_dict(robust_state_dict['vision_encoder_state_dict'])
-
         print("=> Model created: visual backbone {}".format(args.arch))
         
         if not torch.cuda.is_available():
@@ -198,22 +183,6 @@ def main():
 
         if args.algorithm == 'tpt':
             tta_trainer = TPT(model, args.gpu)
-        elif args.algorithm == 'ctpt':
-            tta_trainer = CTPT(model, args.gpu)
-        elif args.algorithm == 'mta':
-            tta_trainer = MTA(model, args.gpu)
-        elif args.algorithm == 'rlcf':
-            tta_trainer = RLCF(model, args.gpu)
-        elif args.algorithm == 'clipzs':
-            tta_trainer = CLIPZS(model, args.gpu)
-        elif args.algorithm == 'zero':
-            tta_trainer = ZERO(model, args.gpu)
-        elif args.algorithm == 'tps':
-            tta_trainer = TPS(model, args.gpu)
-        elif args.algorithm == 'ttl':
-            tta_trainer = TTL(model, args.gpu)
-        elif args.algorithm == 'rtpt':
-            tta_trainer = RTPT(model, args.gpu)
         elif args.algorithm == 'use':
             tta_trainer = USE(model, args.gpu)
         elif args.algorithm == 'se':
@@ -222,15 +191,13 @@ def main():
             tta_trainer = CLIP(model, args.gpu)
         elif args.algorithm == 'headroom':
             tta_trainer = Headroom(model, args.gpu)
-        elif args.algorithm == 'sts':
-            tta_trainer = STS(model, args.gpu)
         else:  
             raise NotImplementedError
         
-       zs1 = AverageMeter('TTA_Acc@1', ':6.2f', Summary.AVERAGE)
+        zs1 = AverageMeter('TTA_Acc@1', ':6.2f', Summary.AVERAGE)
         tta1 = AverageMeter('TTA_Acc@1', ':6.2f', Summary.AVERAGE)
         
-        # 1. Initialize tracking variables for confirmation bias plot
+        # Initialize tracking variables for confirmation bias plot
         all_entropies = []
         is_correct_list = []
         pseudo_accuracies = []
@@ -260,14 +227,14 @@ def main():
 
             images = torch.cat(images, dim=0)
             
-            # 2. Extract pseudo-label and entropy with fixed syntax
+            # Extract pseudo-label and entropy based on algorithm
             if args.algorithm == 'headroom':
                 metrics = tta_trainer.evaluate_sample(images, target, args)
                 pred_tta = metrics["pred_q_se_use"]
-            elif args.algorithm in ['use', 'se']:  # Fixed 'else if' to 'elif'
-                pred_tta, ent = tta_trainer.adaptation_process(image, images, args)
+            elif args.algorithm in ['use', 'se']:
+                pred_tta = tta_trainer.adaptation_process(image, images, args)
                 
-                # 3. Track metrics for SE/USE
+                # Track metrics for SE/USE
                 is_correct = (int(pred_tta) == int(target.item()))
                 all_entropies.append(ent)
                 is_correct_list.append(is_correct)
@@ -275,7 +242,7 @@ def main():
                 correct_pseudo_count += int(is_correct)
                 pseudo_accuracies.append(correct_pseudo_count / (i + 1))
             else:
-                # Fallback for standard algorithms that don't return entropy
+                # Fallback for standard algorithms
                 pred_tta = tta_trainer.adaptation_process(image, images, args)
 
             acc_tta = float(int(pred_tta) == int(target.item()))
@@ -304,9 +271,11 @@ def main():
         args.out_file.flush()
         print(print_log+'\n')
         
-        # 4. Save tracking data to disk so you can plot it in a separate script
+        # Save tracking data to disk
         if args.algorithm in ['use', 'se']:
-            save_path = os.path.join(args.output_dir, f'tracking_data_{dset}.npz')
+            # Sanitize dset string for filename if it contains slashes
+            dset_clean = str(dset).replace('/', '_')
+            save_path = os.path.join(args.output_dir, f'tracking_data_{dset_clean}.npz')
             np.savez(save_path, 
                      entropies=np.array(all_entropies), 
                      is_correct=np.array(is_correct_list), 
@@ -314,6 +283,16 @@ def main():
             print(f"=> Saved confirmation bias tracking data to {save_path}")
 
         del val_dataset, val_loader
+        if args.algorithm == 'headroom':
+            report = tta_trainer.format_report(dset)
+            args.out_file.write(report + '\n')
+            args.out_file.flush()
+            print(report + '\n')
+        print_log = "=> Acc@1 on [{}]: TTA {:.3f}".format(dset, zs1.avg)
+      
+        args.out_file.write(print_log + '\n')
+        args.out_file.flush()
+        print(print_log+'\n')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Test-time Prompt Tuning')
@@ -332,7 +311,7 @@ if __name__ == '__main__':
     parser.add_argument('--gpu', default=0, type=int, help='GPU id to use.')
     parser.add_argument('--n_ctx', default=4, type=int, help='number of tunable tokens')
     parser.add_argument('--ctx_init', default='a_photo_of_a', type=str, help='init tunable prompts')
-    parser.add_argument('--load', default=None, type=str, help='path to a pre-trained coop/cocoop') # ./coop_weight/to_gdrive/
+    parser.add_argument('--load', default=None, type=str, help='path to a pre-trained coop/cocoop')
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--output_dir', type=str, default='temp')
     parser.add_argument('--lr', '--learning-rate', default=5e-3, type=float,
@@ -344,7 +323,7 @@ if __name__ == '__main__':
     parser.add_argument('--reset', action='store_true')
     parser.add_argument('--scale', default=0.4, type=float)
     parser.add_argument('--beta', default=-1, type=float)
-    parser.add_argument('--alpha', default=None, type=float, help='manual alpha value for method (if not provided, will be calculated automatically)')
+    parser.add_argument('--alpha', default=None, type=float, help='manual alpha value')
     parser.add_argument('--skip', action='store_true', help='enable the skip strategy')
     parser.add_argument('--infer', action='store_true', help='only provide the training-free results')
     parser.add_argument("--out" , default= "output.txt", help= "path to output file")

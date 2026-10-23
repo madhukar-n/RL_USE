@@ -1,43 +1,52 @@
 import torch
+import torch.nn.functional as F
 import numpy as np
 
-import torch.nn.functional as F
+def compute_jsd(p, q):
+    """Computes Jensen-Shannon Divergence between two probability distributions."""
+    m = 0.5 * (p + q)
+    # F.kl_div expects the first input in log-space and target in prob-space
+    kl_p = F.kl_div(m.log(), p, reduction='sum')
+    kl_q = F.kl_div(m.log(), q, reduction='sum')
+    return 0.5 * (kl_p + kl_q)
 
-def cal_ent(zs, ens, alpha):
-    ens_pred = alpha * zs.softmax(dim=0) + (1.0 - alpha) * ens.softmax(dim=1).mean(dim=0)
-    pred_ = ens_pred.argmax()
-
-    output_ = torch.clamp(ens_pred, min=1e-7)
-    ent_ = -(output_ * output_.log()).sum() / np.log(len(output_))
-
-    return pred_.item(), ent_.item()
-
-def select_and_cal_ent(outputs, selection_p, alpha=None, scale=0.4):
-   
-    batch_entropy = -(outputs[1:].softmax(1) * outputs[1:].log_softmax(1)).sum(1)
-    zs_entropy = -(outputs[0].softmax(0) * outputs[0].log_softmax(0)).sum()
+def select_and_cal_ent(outputs, selection_p=0.1, alpha=0, tau=1.0):
+    # outputs[0] is weak augmentation (p_w)
+    # outputs[1:] are strong augmentations
     
-    # 选择最低熵的样本
-    # selected_num = max(1, int(batch_entropy.size(0) * selection_p))
-    selected_num =6
+    # 1. Convert logits to probabilities
+    p_w = outputs[0].softmax(dim=0)
+    p_s_all = outputs[1:].softmax(dim=1)
+    
+    # 2. Select top confident strong augmentations (same as USE filter)
+    batch_entropy = -(p_s_all * outputs[1:].log_softmax(1)).sum(1)
+    selected_num = max(1, int(batch_entropy.size(0) * selection_p))
     idx = torch.argsort(batch_entropy, descending=False)[:selected_num]
-
-    # print(selected_num)
     
-    # 计算alpha
-    if alpha is not None:
-        final_alpha = alpha
-    else:
-        rank_ = (zs_entropy < batch_entropy).sum().item() / len(batch_entropy)
-        diff=rank_-0.5
-        sign = 1 if diff > 0 else (-1 if diff < 0 else 0)
-        final_alpha = sign*diff*diff * scale + 0.5
+    # Calculate mean strong prediction over selected views
+    p_s_mean = p_s_all[idx].mean(dim=0)
     
-    # 计算cal_ent
-    pred_mean, ent = cal_ent(outputs[0], outputs[1:][idx], final_alpha)
+    # 3. Calculate Entropies
+    H_w = -(p_w * outputs[0].log_softmax(0)).sum()
+    H_s = -(p_s_mean * torch.log(p_s_mean + 1e-8)).sum()
     
-    return pred_mean, ent, idx, final_alpha
-
+    # 4. Calculate JSD Penalty
+    jsd_penalty = compute_jsd(p_w, p_s_mean)
+    
+    # 5. Continuous Agreement-Aware Weighting (replaces Eq 6)
+    w_w = torch.exp(-H_w / tau) * (1.0 - jsd_penalty)
+    w_s = torch.exp(-H_s / tau)
+    
+    beta_star = w_w / (w_w + w_s + 1e-8)
+    
+    # 6. Final Pseudo-Label & Ensemble Entropy
+    q_x = beta_star * p_w + (1.0 - beta_star) * p_s_mean
+    pred_mean = q_x.argmax().item()
+    
+    output_clamp = torch.clamp(q_x, min=1e-7)
+    ent_ = -(output_clamp * output_clamp.log()).sum() / np.log(len(output_clamp))
+    
+    return pred_mean, ent_.item(), idx, beta_star.item()
 
 class SE():
     def __init__(self, model, device):
@@ -63,9 +72,9 @@ class SE():
             with torch.amp.autocast('cuda'):
                 output = self.model(images)
         
-        pred_mean, ent, _, alpha = select_and_cal_ent(
+        pred_mean, _, _, alpha = select_and_cal_ent(
                 output, 0.1, args.alpha, args.scale
             )
 
-        return pred_mean, ent
+        return pred_mean
 
