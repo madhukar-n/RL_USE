@@ -10,7 +10,7 @@ def cal_ent(zs, ens, alpha):
     output_ = torch.clamp(ens_pred, min=1e-7)
     ent_ = -(output_ * output_.log()).sum() / np.log(len(output_))
 
-    return pred_.item(), ent_.item()
+    return pred_.item(), ent_.item(), output_
 
 def select_and_cal_ent(outputs, selection_p, alpha=None, scale=0.4):
    
@@ -34,9 +34,9 @@ def select_and_cal_ent(outputs, selection_p, alpha=None, scale=0.4):
         final_alpha = sign*diff*diff * scale + 0.5
     
     # 计算cal_ent
-    pred_mean, ent = cal_ent(outputs[0], outputs[1:][idx], final_alpha)
+    pred_mean, ent,pseudolabel = cal_ent(outputs[0], outputs[1:][idx], final_alpha)
     
-    return pred_mean, ent, idx, final_alpha
+    return pred_mean, ent, idx, final_alpha,pseudolabel
 
 
 class SE():
@@ -63,9 +63,9 @@ class SE():
             with torch.amp.autocast('cuda'):
                 output = self.model(images)
         
-        pred_mean, _, _, alpha = select_and_cal_ent(
+        pred_mean,ent, _, alpha,pseudolabel = select_and_cal_ent(
                 output, 0.1, args.alpha, args.scale
             )
 
-        return pred_mean
+        return pred_mean,ent, pseudolabel
 
