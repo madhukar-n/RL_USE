@@ -30,7 +30,7 @@ from utils.tools import Summary, AverageMeter, ProgressMeter, accuracy, load_mod
 from data.cls_to_names import *
 from data.fewshot_datasets import fewshot_datasets
 from data.imagenet_variants import thousand_k_to_200, imagenet_a_mask, imagenet_r_mask, imagenet_v_mask
-
+from utils.aug_viz import visualize_augmix_views
 from instance_method.tpt import TPT
 #from instance_method.ctpt import CTPT
 #from instance_method.mta import MTA
@@ -211,6 +211,7 @@ def main():
             old_target = target
 
             images = data[0]
+            vizualize_augmix_views(images[0], data_transform)  # Visualize the first image and its augmentations
             if isinstance(images, list):
                 for k in range(len(images)):
                     if torch.cuda.is_available():
