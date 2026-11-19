@@ -1,0 +1,68 @@
+==========================================
+data:./datasets/
+test_sets:K
+dataset_mode:test
+max_samples:None
+arch:RN50
+resolution:224
+workers:4
+batch_size:64
+print_freq:200
+gpu:0
+n_ctx:4
+ctx_init:a_photo_of_a
+load:None
+seed:0
+output_dir:temp/RN50/seed_0/use
+lr:0.005
+selection_p:0.1
+tta_steps:1
+algorithm:use
+load_tecoa:False
+reset:False
+scale:0.4
+beta:-1
+alpha:None
+skip:False
+infer:False
+out:./results/new_use_K_resnet_0_5.txt
+use_feedback:True
+feedback_ent_threshold:0.5
+out_file:<_io.TextIOWrapper name='./results/new_use_K_resnet_0_5.txt' mode='w' encoding='utf-8'>
+
+number of test samples: 50889
+iter:200/50889, tta_acc1=42.500
+iter:400/50889, tta_acc1=46.000
+iter:600/50889, tta_acc1=47.000
+iter:800/50889, tta_acc1=43.125
+iter:1000/50889, tta_acc1=45.400
+iter:1200/50889, tta_acc1=47.583
+iter:1400/50889, tta_acc1=45.071
+iter:1600/50889, tta_acc1=45.250
+iter:1800/50889, tta_acc1=44.111
+iter:2000/50889, tta_acc1=43.100
+iter:2200/50889, tta_acc1=41.545
+iter:2400/50889, tta_acc1=40.292
+iter:2600/50889, tta_acc1=40.692
+iter:2800/50889, tta_acc1=40.000
+iter:3000/50889, tta_acc1=37.967
+iter:3200/50889, tta_acc1=36.125
+iter:3400/50889, tta_acc1=34.559
+iter:3600/50889, tta_acc1=34.556
+iter:3800/50889, tta_acc1=34.579
+iter:4000/50889, tta_acc1=35.200
+iter:4200/50889, tta_acc1=36.024
+iter:4400/50889, tta_acc1=36.386
+iter:4600/50889, tta_acc1=36.630
+iter:4800/50889, tta_acc1=36.229
+iter:5000/50889, tta_acc1=36.760
+iter:5200/50889, tta_acc1=37.327
+iter:5400/50889, tta_acc1=37.685
+iter:5600/50889, tta_acc1=38.018
+iter:5800/50889, tta_acc1=38.448
+iter:6000/50889, tta_acc1=38.133
+iter:6200/50889, tta_acc1=38.323
+iter:6400/50889, tta_acc1=38.156
+iter:6600/50889, tta_acc1=38.061
+iter:6800/50889, tta_acc1=37.588
+iter:7000/50889, tta_acc1=37.557

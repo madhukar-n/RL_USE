@@ -2,7 +2,7 @@
 data:./datasets/
 test_sets:eurosat
 dataset_mode:test
-max_samples:1000
+max_samples:None
 arch:RN50
 resolution:224
 workers:4
@@ -28,6 +28,48 @@ infer:False
 out:./results/use_eurosat_resnet_feedback.txt
 use_feedback:True
 feedback_ent_threshold:0.6
-out_file:<_io.TextIOWrapper name='./results/use_eurosat_resnet_feedback.txt' mode='w' encoding='UTF-8'>
+out_file:<_io.TextIOWrapper name='./results/use_eurosat_resnet_feedback.txt' mode='w' encoding='utf-8'>
 
-number of test samples: 1000
+number of test samples: 8100
+iter:200/8100, tta_acc1=1.000
+iter:400/8100, tta_acc1=0.750
+iter:600/8100, tta_acc1=0.833
+iter:800/8100, tta_acc1=0.625
+iter:1000/8100, tta_acc1=1.200
+iter:1200/8100, tta_acc1=2.583
+iter:1400/8100, tta_acc1=3.357
+iter:1600/8100, tta_acc1=4.625
+iter:1800/8100, tta_acc1=5.167
+iter:2000/8100, tta_acc1=6.650
+iter:2200/8100, tta_acc1=7.545
+iter:2400/8100, tta_acc1=8.542
+iter:2600/8100, tta_acc1=9.500
+iter:2800/8100, tta_acc1=12.607
+iter:3000/8100, tta_acc1=17.467
+iter:3200/8100, tta_acc1=21.656
+iter:3400/8100, tta_acc1=25.500
+iter:3600/8100, tta_acc1=27.722
+iter:3800/8100, tta_acc1=29.711
+iter:4000/8100, tta_acc1=31.150
+iter:4200/8100, tta_acc1=32.690
+iter:4400/8100, tta_acc1=31.409
+iter:4600/8100, tta_acc1=30.174
+iter:4800/8100, tta_acc1=29.125
+iter:5000/8100, tta_acc1=30.160
+iter:5200/8100, tta_acc1=31.000
+iter:5400/8100, tta_acc1=31.815
+iter:5600/8100, tta_acc1=32.661
+iter:5800/8100, tta_acc1=33.069
+iter:6000/8100, tta_acc1=33.467
+iter:6200/8100, tta_acc1=33.871
+iter:6400/8100, tta_acc1=34.203
+iter:6600/8100, tta_acc1=33.970
+iter:6800/8100, tta_acc1=33.574
+iter:7000/8100, tta_acc1=33.300
+iter:7200/8100, tta_acc1=32.861
+iter:7400/8100, tta_acc1=34.568
+iter:7600/8100, tta_acc1=36.171
+iter:7800/8100, tta_acc1=37.603
+iter:8000/8100, tta_acc1=39.000
+iter:8100/8100, tta_acc1=39.716
+=> Acc@1 on [eurosat]: TTA 39.716

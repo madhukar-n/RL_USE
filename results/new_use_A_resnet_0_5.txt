@@ -1,0 +1,75 @@
+==========================================
+data:./datasets/
+test_sets:eurosat
+dataset_mode:test
+max_samples:None
+arch:RN50
+resolution:224
+workers:4
+batch_size:64
+print_freq:200
+gpu:0
+n_ctx:4
+ctx_init:a_photo_of_a
+load:None
+seed:0
+output_dir:temp/RN50/seed_0/use
+lr:0.005
+selection_p:0.1
+tta_steps:1
+algorithm:use
+load_tecoa:False
+reset:False
+scale:0.4
+beta:-1
+alpha:None
+skip:False
+infer:False
+out:./results/new_use_A_resnet_0_5.txt
+use_feedback:True
+feedback_ent_threshold:0.5
+out_file:<_io.TextIOWrapper name='./results/new_use_A_resnet_0_5.txt' mode='w' encoding='utf-8'>
+
+number of test samples: 8100
+iter:200/8100, tta_acc1=1.000
+iter:400/8100, tta_acc1=0.750
+iter:600/8100, tta_acc1=0.833
+iter:800/8100, tta_acc1=0.625
+iter:1000/8100, tta_acc1=1.200
+iter:1200/8100, tta_acc1=2.500
+iter:1400/8100, tta_acc1=3.357
+iter:1600/8100, tta_acc1=4.438
+iter:1800/8100, tta_acc1=5.000
+iter:2000/8100, tta_acc1=6.550
+iter:2200/8100, tta_acc1=7.409
+iter:2400/8100, tta_acc1=8.375
+iter:2600/8100, tta_acc1=9.346
+iter:2800/8100, tta_acc1=12.464
+iter:3000/8100, tta_acc1=17.367
+iter:3200/8100, tta_acc1=21.531
+iter:3400/8100, tta_acc1=25.382
+iter:3600/8100, tta_acc1=27.778
+iter:3800/8100, tta_acc1=29.868
+iter:4000/8100, tta_acc1=31.375
+iter:4200/8100, tta_acc1=32.952
+iter:4400/8100, tta_acc1=31.614
+iter:4600/8100, tta_acc1=30.370
+iter:4800/8100, tta_acc1=29.312
+iter:5000/8100, tta_acc1=30.360
+iter:5200/8100, tta_acc1=31.192
+iter:5400/8100, tta_acc1=32.037
+iter:5600/8100, tta_acc1=32.893
+iter:5800/8100, tta_acc1=33.276
+iter:6000/8100, tta_acc1=33.700
+iter:6200/8100, tta_acc1=34.113
+iter:6400/8100, tta_acc1=34.406
+iter:6600/8100, tta_acc1=34.212
+iter:6800/8100, tta_acc1=33.809
+iter:7000/8100, tta_acc1=33.529
+iter:7200/8100, tta_acc1=33.097
+iter:7400/8100, tta_acc1=34.797
+iter:7600/8100, tta_acc1=36.408
+iter:7800/8100, tta_acc1=37.833
+iter:8000/8100, tta_acc1=39.250
+iter:8100/8100, tta_acc1=39.963
+=> Acc@1 on [eurosat]: TTA 39.963

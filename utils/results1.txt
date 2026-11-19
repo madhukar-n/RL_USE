@@ -1,0 +1,17 @@
+iter:200/1692, tta_acc1=36.000
+
+iter:400/1692, tta_acc1=50.500
+
+iter:600/1692, tta_acc1=45.500
+
+iter:800/1692, tta_acc1=42.500
+
+iter:1000/1692, tta_acc1=44.800
+
+iter:1200/1692, tta_acc1=47.083
+
+iter:1400/1692, tta_acc1=47.214
+
+iter:1600/1692, tta_acc1=48.875
+
+iter:1692/1692, tta_acc1=49.173

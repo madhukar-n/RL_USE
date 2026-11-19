@@ -67,5 +67,5 @@ class SE():
                 output, 0.1, args.alpha, args.scale
             )
 
-        return pred_mean,ent, pseudolabel
+        return pred_mean, ent
 

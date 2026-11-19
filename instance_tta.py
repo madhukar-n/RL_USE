@@ -211,7 +211,9 @@ def main():
             old_target = target
 
             images = data[0]
-            vizualize_augmix_views(images[0], data_transform)  # Visualize the first image and its augmentations
+            if args.viz and i == 0 and isinstance(images, list):
+                # Plot the weak view and augmented views of the first test image
+                visualize_augmix_views([v[0] for v in images], lambda views: views)
             if isinstance(images, list):
                 for k in range(len(images)):
                     if torch.cuda.is_available():
@@ -230,7 +232,10 @@ def main():
             
             # Extract pseudo-label and entropy based on algorithm
             if args.algorithm in ['use', 'se']:
-                pred_tta, ent,_,_,_,_= tta_trainer.adaptation_process(image, images,args)
+                if args.algorithm == 'use':
+                    pred_tta, ent = tta_trainer.adaptation_process(image, images, args, target=target.item())
+                else:
+                    pred_tta, ent = tta_trainer.adaptation_process(image, images, args)
                 # Track metrics for SE/USE
                 is_correct = (int(pred_tta) == int(target.item()))
                 all_entropies.append(ent)
@@ -286,7 +291,10 @@ def main():
             args.out_file.flush()
             print(report + '\n')
         print_log = "=> Acc@1 on [{}]: TTA {:.3f}".format(dset, zs1.avg)
-      
+        if args.algorithm == 'use' and args.use_feedback:
+            print_log += "\n=> Binary feedback queried on {}/{} samples (entropy > {})".format(
+                tta_trainer.num_feedback_queries, i + 1, args.feedback_ent_threshold)
+
         args.out_file.write(print_log + '\n')
         args.out_file.flush()
         print(print_log+'\n')
@@ -325,5 +333,7 @@ if __name__ == '__main__':
     parser.add_argument('--infer', action='store_true', help='only provide the training-free results')
     parser.add_argument("--out" , default= "output.txt", help= "path to output file")
     parser.add_argument('--use_feedback', action='store_true', help='Enable binary feedback via REINFORCE')
-    parser.add_argument('--feedback_ent_threshold', default=0.6, type=float, help='Entropy threshold to trigger oracle')
+    parser.add_argument('--feedback_ent_threshold', default=0.5, type=float,
+                        help='normalized-entropy threshold above which a sample asks for binary feedback')
+    parser.add_argument('--viz', action='store_true', help='plot the augmented views of the first test image')
     main()

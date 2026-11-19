@@ -1,0 +1,70 @@
+==========================================
+data:./datasets/
+test_sets:eurosat
+dataset_mode:test
+max_samples:1000
+arch:ViT-B/16
+resolution:224
+workers:4
+batch_size:64
+print_freq:200
+gpu:0
+n_ctx:4
+ctx_init:a_photo_of_a
+load:None
+seed:0
+output_dir:temp/ViT-B16/seed_0/headroom
+lr:0.005
+selection_p:0.1
+tta_steps:1
+algorithm:headroom
+load_tecoa:False
+reset:False
+scale:0.4
+beta:-1
+alpha:None
+skip:False
+infer:False
+out:./results/headroom_eurosat.txt
+out_file:<_io.TextIOWrapper name='./results/headroom_eurosat.txt' mode='w' encoding='utf-8'>
+
+number of test samples: 1000
+iter:200/1000, se_q_acc1=63.500, oracle_mixed_q_acc1=80.000, oracle_pure_q_acc1=97.000, zs_view0_acc1=68.000, min_ent_view_acc1=43.500
+iter:400/1000, se_q_acc1=64.500, oracle_mixed_q_acc1=82.000, oracle_pure_q_acc1=97.500, zs_view0_acc1=69.250, min_ent_view_acc1=45.000
+iter:600/1000, se_q_acc1=64.333, oracle_mixed_q_acc1=82.167, oracle_pure_q_acc1=97.333, zs_view0_acc1=70.667, min_ent_view_acc1=46.333
+iter:800/1000, se_q_acc1=65.250, oracle_mixed_q_acc1=82.000, oracle_pure_q_acc1=97.375, zs_view0_acc1=71.125, min_ent_view_acc1=47.125
+iter:1000/1000, se_q_acc1=58.600, oracle_mixed_q_acc1=76.400, oracle_pure_q_acc1=95.400, zs_view0_acc1=64.800, min_ent_view_acc1=42.200
+iter:1000/1000, tta_acc1=58.600
+======================================================================
+Step 0 Headroom Report — Dataset: [eurosat] (N=1000)
+======================================================================
+1. Top-1 Accuracy of q from Current SE Rule:
+   - SE Rule (USE linear alpha, top-10%)        :  58.60%
+   - SE Rule (se.py quad alpha, top-6)          :  57.60%
+----------------------------------------------------------------------
+2. Top-1 Accuracy of Oracle q (Views Predicting True Class):
+   - Oracle q (SE-mixed: alpha*p0 + (1-a)*p_S*) :  76.40%  (Headroom: +17.80%)
+   - Oracle q (SE-mixed quad alpha)             :  77.00%
+   - Oracle q (Pure subset, aug views 1..N)     :  95.10%  (Headroom: +36.50%)
+   - Oracle q (Pure subset, all views 0..N)     :  95.40%  (Headroom: +36.80%)
+----------------------------------------------------------------------
+3. Top-1 Accuracy of Best Single View:
+   - Zero-Shot View 0 (unaugmented center crop) :  64.80%
+   - Min-Entropy Single View (aug views 1..N)   :  42.20%
+   - Min-Entropy Single View (all views 0..N)   :  45.40%
+   - Best Fixed View Index (all 0..N, idx= 0)  :  64.80%
+   - Best Fixed Aug View Index (1..N, idx=50)  :  23.00%
+   - Mean Single Augmented View (1..N)          :  20.50%
+   - Per-Instance Oracle Single View (aug 1..N) :  95.10%
+   - Per-Instance Oracle Single View (all 0..N) :  95.40%
+----------------------------------------------------------------------
+4. View Selection Diagnostics:
+   - Avg % of aug views predicting true class   :  20.50%
+   - SE top-K precision (% selected views == y) :  41.47%
+   - ZS wrong -> rescued by Current SE q        :   2.10%
+   - ZS wrong -> rescued by Oracle SE-mixed q   :  11.60%
+   - ZS wrong -> rescued by Oracle Pure q       :  30.60%
+   - ZS right -> corrupted by Current SE q      :   8.30%
+   - ZS right -> corrupted by Oracle SE-mixed q :   0.00%
+======================================================================
+=> Acc@1 on [eurosat]: TTA 58.600

@@ -1,0 +1,41 @@
+==========================================
+data:./datasets/
+test_sets:I
+dataset_mode:test
+max_samples:1000
+arch:RN50
+resolution:224
+workers:4
+batch_size:64
+print_freq:200
+gpu:0
+n_ctx:4
+ctx_init:a_photo_of_a
+load:None
+seed:0
+output_dir:temp/RN50/seed_0/use
+lr:0.005
+selection_p:0.1
+tta_steps:2
+algorithm:use
+load_tecoa:False
+reset:False
+scale:0.4
+beta:-1
+alpha:None
+skip:False
+infer:False
+out:./results/imagenet_tta2.txt
+alpha_rl:0.0
+lam:0.5
+sel_num:6
+out_file:<_io.TextIOWrapper name='./results/imagenet_tta2.txt' mode='w' encoding='utf-8'>
+
+number of test samples: 1000
+iter:200/1000, tta_acc1=68.000
+iter:400/1000, tta_acc1=62.250
+iter:600/1000, tta_acc1=69.667
+iter:800/1000, tta_acc1=75.625
+iter:1000/1000, tta_acc1=77.400
+iter:1000/1000, tta_acc1=77.400
+=> Acc@1 on [I]: TTA 77.400

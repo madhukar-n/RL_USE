@@ -1,0 +1,60 @@
+==========================================
+data:./datasets/
+test_sets:I
+dataset_mode:test
+max_samples:5000
+arch:RN50
+resolution:224
+workers:4
+batch_size:64
+print_freq:200
+gpu:0
+n_ctx:4
+ctx_init:a_photo_of_a
+load:None
+seed:0
+output_dir:temp/RN50/seed_0/use
+lr:0.005
+selection_p:0.1
+tta_steps:1
+algorithm:use
+load_tecoa:False
+reset:False
+scale:0.4
+beta:-1
+alpha:None
+skip:False
+infer:False
+out:./results/new_use_I_resnet_0_5.txt
+use_feedback:True
+feedback_ent_threshold:0.5
+out_file:<_io.TextIOWrapper name='./results/new_use_I_resnet_0_5.txt' mode='w' encoding='utf-8'>
+
+number of test samples: 5000
+iter:200/5000, tta_acc1=75.500
+iter:400/5000, tta_acc1=70.000
+iter:600/5000, tta_acc1=77.000
+iter:800/5000, tta_acc1=81.875
+iter:1000/5000, tta_acc1=83.900
+iter:1200/5000, tta_acc1=82.750
+iter:1400/5000, tta_acc1=81.786
+iter:1600/5000, tta_acc1=82.000
+iter:1800/5000, tta_acc1=81.000
+iter:2000/5000, tta_acc1=79.900
+iter:2200/5000, tta_acc1=79.136
+iter:2400/5000, tta_acc1=77.458
+iter:2600/5000, tta_acc1=78.077
+iter:2800/5000, tta_acc1=76.071
+iter:3000/5000, tta_acc1=74.700
+iter:3200/5000, tta_acc1=72.906
+iter:3400/5000, tta_acc1=72.029
+iter:3600/5000, tta_acc1=72.750
+iter:3800/5000, tta_acc1=72.474
+iter:4000/5000, tta_acc1=72.675
+iter:4200/5000, tta_acc1=72.976
+iter:4400/5000, tta_acc1=73.545
+iter:4600/5000, tta_acc1=74.457
+iter:4800/5000, tta_acc1=74.750
+iter:5000/5000, tta_acc1=74.840
+iter:5000/5000, tta_acc1=74.840
+=> Acc@1 on [I]: TTA 74.840

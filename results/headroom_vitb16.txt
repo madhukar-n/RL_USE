@@ -1,0 +1,125 @@
+
+>>> Evaluating dataset [DTD] (samples=1000, arch=ViT-B/16)
+[DTD] iter:200/1000 | SE_q=35.00% (quad=34.50%) | Oracle_q(mixed)=41.50% | Oracle_q(pure)=53.50% | ZS_view0=36.50% | MinEnt_view=32.00%
+[DTD] iter:400/1000 | SE_q=50.50% (quad=50.25%) | Oracle_q(mixed)=56.50% | Oracle_q(pure)=71.50% | ZS_view0=49.75% | MinEnt_view=48.50%
+[DTD] iter:600/1000 | SE_q=43.17% (quad=43.00%) | Oracle_q(mixed)=49.00% | Oracle_q(pure)=65.67% | ZS_view0=42.33% | MinEnt_view=41.67%
+[DTD] iter:800/1000 | SE_q=41.88% (quad=41.62%) | Oracle_q(mixed)=47.50% | Oracle_q(pure)=64.12% | ZS_view0=39.62% | MinEnt_view=40.50%
+[DTD] iter:1000/1000 | SE_q=43.20% (quad=42.90%) | Oracle_q(mixed)=49.70% | Oracle_q(pure)=68.30% | ZS_view0=40.50% | MinEnt_view=42.50%
+======================================================================
+Step 0 Headroom Report — Dataset: [DTD] (N=1000)
+======================================================================
+1. Top-1 Accuracy of q from Current SE Rule:
+   - SE Rule (USE linear alpha, top-10%)        :  43.20%
+   - SE Rule (se.py quad alpha, top-6)          :  42.90%
+----------------------------------------------------------------------
+2. Top-1 Accuracy of Oracle q (Views Predicting True Class):
+   - Oracle q (SE-mixed: alpha*p0 + (1-a)*p_S*) :  49.70%  (Headroom: +6.50%)
+   - Oracle q (SE-mixed quad alpha)             :  49.50%
+   - Oracle q (Pure subset, aug views 1..N)     :  68.10%  (Headroom: +24.90%)
+   - Oracle q (Pure subset, all views 0..N)     :  68.30%  (Headroom: +25.10%)
+----------------------------------------------------------------------
+3. Top-1 Accuracy of Best Single View:
+   - Zero-Shot View 0 (unaugmented center crop) :  40.50%
+   - Min-Entropy Single View (aug views 1..N)   :  42.50%
+   - Min-Entropy Single View (all views 0..N)   :  42.40%
+   - Best Fixed View Index (all 0..N, idx= 0)  :  40.50%
+   - Best Fixed Aug View Index (1..N, idx=32)  :  37.50%
+   - Mean Single Augmented View (1..N)          :  35.57%
+   - Per-Instance Oracle Single View (aug 1..N) :  68.10%
+   - Per-Instance Oracle Single View (all 0..N) :  68.30%
+----------------------------------------------------------------------
+4. View Selection Diagnostics:
+   - Avg % of aug views predicting true class   :  35.57%
+   - SE top-K precision (% selected views == y) :  41.95%
+   - ZS wrong -> rescued by Current SE q        :   4.30%
+   - ZS wrong -> rescued by Oracle SE-mixed q   :   9.20%
+   - ZS wrong -> rescued by Oracle Pure q       :  27.80%
+   - ZS right -> corrupted by Current SE q      :   1.60%
+   - ZS right -> corrupted by Oracle SE-mixed q :   0.00%
+======================================================================
+
+>>> Evaluating dataset [Caltech101] (samples=1000, arch=ViT-B/16)
+[Caltech101] iter:200/1000 | SE_q=99.00% (quad=99.00%) | Oracle_q(mixed)=98.50% | Oracle_q(pure)=100.00% | ZS_view0=95.50% | MinEnt_view=94.50%
+[Caltech101] iter:400/1000 | SE_q=99.50% (quad=99.50%) | Oracle_q(mixed)=99.25% | Oracle_q(pure)=100.00% | ZS_view0=97.75% | MinEnt_view=97.25%
+[Caltech101] iter:600/1000 | SE_q=99.67% (quad=99.67%) | Oracle_q(mixed)=99.50% | Oracle_q(pure)=100.00% | ZS_view0=98.33% | MinEnt_view=97.67%
+[Caltech101] iter:800/1000 | SE_q=98.25% (quad=98.25%) | Oracle_q(mixed)=98.50% | Oracle_q(pure)=99.75% | ZS_view0=96.88% | MinEnt_view=96.62%
+[Caltech101] iter:1000/1000 | SE_q=97.60% (quad=97.70%) | Oracle_q(mixed)=98.00% | Oracle_q(pure)=99.80% | ZS_view0=96.30% | MinEnt_view=96.10%
+======================================================================
+Step 0 Headroom Report — Dataset: [Caltech101] (N=1000)
+======================================================================
+1. Top-1 Accuracy of q from Current SE Rule:
+   - SE Rule (USE linear alpha, top-10%)        :  97.60%
+   - SE Rule (se.py quad alpha, top-6)          :  97.70%
+----------------------------------------------------------------------
+2. Top-1 Accuracy of Oracle q (Views Predicting True Class):
+   - Oracle q (SE-mixed: alpha*p0 + (1-a)*p_S*) :  98.00%  (Headroom: +0.40%)
+   - Oracle q (SE-mixed quad alpha)             :  98.50%
+   - Oracle q (Pure subset, aug views 1..N)     :  99.80%  (Headroom: +2.20%)
+   - Oracle q (Pure subset, all views 0..N)     :  99.80%  (Headroom: +2.20%)
+----------------------------------------------------------------------
+3. Top-1 Accuracy of Best Single View:
+   - Zero-Shot View 0 (unaugmented center crop) :  96.30%
+   - Min-Entropy Single View (aug views 1..N)   :  96.10%
+   - Min-Entropy Single View (all views 0..N)   :  96.40%
+   - Best Fixed View Index (all 0..N, idx= 0)  :  96.30%
+   - Best Fixed Aug View Index (1..N, idx=21)  :  88.10%
+   - Mean Single Augmented View (1..N)          :  86.08%
+   - Per-Instance Oracle Single View (aug 1..N) :  99.80%
+   - Per-Instance Oracle Single View (all 0..N) :  99.80%
+----------------------------------------------------------------------
+4. View Selection Diagnostics:
+   - Avg % of aug views predicting true class   :  86.08%
+   - SE top-K precision (% selected views == y) :  96.67%
+   - ZS wrong -> rescued by Current SE q        :   1.40%
+   - ZS wrong -> rescued by Oracle SE-mixed q   :   1.70%
+   - ZS wrong -> rescued by Oracle Pure q       :   3.50%
+   - ZS right -> corrupted by Current SE q      :   0.10%
+   - ZS right -> corrupted by Oracle SE-mixed q :   0.00%
+======================================================================
+
+>>> Evaluating dataset [eurosat] (samples=1000, arch=ViT-B/16)
+[eurosat] iter:200/1000 | SE_q=63.50% (quad=61.00%) | Oracle_q(mixed)=80.00% | Oracle_q(pure)=97.00% | ZS_view0=68.00% | MinEnt_view=43.50%
+[eurosat] iter:400/1000 | SE_q=64.50% (quad=63.50%) | Oracle_q(mixed)=82.00% | Oracle_q(pure)=97.50% | ZS_view0=69.25% | MinEnt_view=45.00%
+[eurosat] iter:600/1000 | SE_q=64.33% (quad=63.33%) | Oracle_q(mixed)=82.17% | Oracle_q(pure)=97.33% | ZS_view0=70.67% | MinEnt_view=46.33%
+[eurosat] iter:800/1000 | SE_q=65.25% (quad=64.00%) | Oracle_q(mixed)=82.00% | Oracle_q(pure)=97.38% | ZS_view0=71.12% | MinEnt_view=47.12%
+[eurosat] iter:1000/1000 | SE_q=58.60% (quad=57.60%) | Oracle_q(mixed)=76.40% | Oracle_q(pure)=95.40% | ZS_view0=64.80% | MinEnt_view=42.20%
+======================================================================
+Step 0 Headroom Report — Dataset: [eurosat] (N=1000)
+======================================================================
+1. Top-1 Accuracy of q from Current SE Rule:
+   - SE Rule (USE linear alpha, top-10%)        :  58.60%
+   - SE Rule (se.py quad alpha, top-6)          :  57.60%
+----------------------------------------------------------------------
+2. Top-1 Accuracy of Oracle q (Views Predicting True Class):
+   - Oracle q (SE-mixed: alpha*p0 + (1-a)*p_S*) :  76.40%  (Headroom: +17.80%)
+   - Oracle q (SE-mixed quad alpha)             :  77.00%
+   - Oracle q (Pure subset, aug views 1..N)     :  95.10%  (Headroom: +36.50%)
+   - Oracle q (Pure subset, all views 0..N)     :  95.40%  (Headroom: +36.80%)
+----------------------------------------------------------------------
+3. Top-1 Accuracy of Best Single View:
+   - Zero-Shot View 0 (unaugmented center crop) :  64.80%
+   - Min-Entropy Single View (aug views 1..N)   :  42.20%
+   - Min-Entropy Single View (all views 0..N)   :  45.40%
+   - Best Fixed View Index (all 0..N, idx= 0)  :  64.80%
+   - Best Fixed Aug View Index (1..N, idx=50)  :  23.00%
+   - Mean Single Augmented View (1..N)          :  20.50%
+   - Per-Instance Oracle Single View (aug 1..N) :  95.10%
+   - Per-Instance Oracle Single View (all 0..N) :  95.40%
+----------------------------------------------------------------------
+4. View Selection Diagnostics:
+   - Avg % of aug views predicting true class   :  20.50%
+   - SE top-K precision (% selected views == y) :  41.47%
+   - ZS wrong -> rescued by Current SE q        :   2.10%
+   - ZS wrong -> rescued by Oracle SE-mixed q   :  11.60%
+   - ZS wrong -> rescued by Oracle Pure q       :  30.60%
+   - ZS right -> corrupted by Current SE q      :   8.30%
+   - ZS right -> corrupted by Oracle SE-mixed q :   0.00%
+======================================================================
+
+# Step 0 Headroom Summary (`ViT-B/16`)
+
+| Dataset | N | 1. SE $q$ (USE) | 1b. SE $q$ (Quad) | 2a. Oracle $q$ (SE-Mixed) | 2b. Oracle $q$ (Pure Aug) | 2c. Oracle $q$ (Pure All) | 3a. ZS View 0 | 3b. Min-Ent Single Aug | 3c. Best Fixed View | 3d. Oracle Single View (All) | Headroom (Mixed - SE) | Headroom (Pure - SE) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| DTD | 1000 | 43.20% | 42.90% | 49.70% | 68.10% | 68.30% | 40.50% | 42.50% | 40.50% | 68.30% | +6.50% | +25.10% |
+| Caltech101 | 1000 | 97.60% | 97.70% | 98.00% | 99.80% | 99.80% | 96.30% | 96.10% | 96.30% | 99.80% | +0.40% | +2.20% |
+| eurosat | 1000 | 58.60% | 57.60% | 76.40% | 95.10% | 95.40% | 64.80% | 42.20% | 64.80% | 95.40% | +17.80% | +36.80% |
