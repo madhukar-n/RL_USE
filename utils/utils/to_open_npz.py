@@ -5,7 +5,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 # 1. Load the data (Update this path to your actual saved .npz file)
-file_path = '../temp/RN50/seed_0/se/tracking_data_A.npz' 
+file_path = 'temp/RN50/seed_0/se/tracking_data_I.npz' 
 data = np.load(file_path)
 
 all_entropies = data['entropies']
@@ -48,6 +48,6 @@ ax2.legend()
 
 # Save the figure to a PNG file instead of displaying it
 plt.tight_layout()
-save_path = 'confirmation_bias_plots.png'
+save_path = input()
 plt.savefig(save_path, dpi=300, bbox_inches='tight')
 print(f"Plot saved successfully to {save_path}")
