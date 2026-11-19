@@ -1,7 +1,6 @@
 # USE: A Unified Self-Ensembling Framework for Test-Time Prompt Tuning
 
-This project is cloned from [USE](https://github.com/sirujiang/USE), the official implementation of **"USE: A Unified Self-Ensembling Framework for Test-Time Prompt Tuning"** (Siru Jiang, Jian Liang, Ran He, Tieniu Tan), accepted as a regular paper at **ICML 2026**. I use it to reproduce the paper's results for the *Representation Learning* course at IIT Hyderabad.
-
+This project is cloned from [USE](https://github.com/sirujiang/USE), the official implementation of **"USE: A Unified Self-Ensembling Framework for Test-Time Prompt Tuning"** (Siru Jiang, Jian Liang, Ran He, Tieniu Tan), accepted as a regular paper at **ICML 2026**.
 ## Method overview
 
 Test-time prompt tuning (TPT) adapts the text prompt of a frozen vision-language model (CLIP) on each unlabeled test image. It trains against a pseudo-label `q(x)` built from the model's predictions on augmented views of that image.
